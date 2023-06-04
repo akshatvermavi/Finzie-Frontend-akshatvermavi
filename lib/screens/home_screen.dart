@@ -18,6 +18,12 @@ import 'package:finzie/services/auth_services.dart';
 import '../providers/user_provider.dart';
 import '../utils/constants.dart';
 
+//below we are importing some packages for color
+import 'package:flutter/material.dart';
+import 'package:finzie/screens/home_screen.dart';
+Color myColor = const Color(0xff2b7a78);
+//Border.all(color: myColor)
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -104,6 +110,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     'pnb',
     'yes',
   ];
+
+  var color;
+
+  //get color => null;
 
   int getTransaction(String message) {
     try {
@@ -660,7 +670,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
         // Return the popup view
         return AlertDialog(
-          title: Text('Edit Transaction'),
+          title: const Text('Edit Transaction'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -668,7 +678,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               TextFormField(
                 controller: debitController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Debit',
                 ),
               ),
@@ -677,7 +687,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               TextFormField(
                 controller: creditController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Credit',
                 ),
               ),
@@ -685,16 +695,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               // Category input field
               TextFormField(
                 controller: categoryController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Category',
                 ),
               ),
 
               // Date picker
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               // Text("Date: ${DateFormat.yMMMd().format(selectedDate)}"),
               ElevatedButton(
-                child: Text('Select date'),
+                child: const Text('Select date'),
                 onPressed: () async {
                   final DateTime? pickedDate = await showDatePicker(
                     context: context,
@@ -726,7 +736,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           actions: [
             // Cancel button
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -734,7 +744,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
             // Submit button
             ElevatedButton(
-              child: Text('Submit'),
+              child: const Text('Submit'),
               onPressed: handleSubmit,
             ),
           ],
@@ -753,32 +763,32 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void openMenu(BuildContext context) async {
     final result = await showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(0, kToolbarHeight, 0, 0),
+      position: const RelativeRect.fromLTRB(0, kToolbarHeight, 0, 0),
       items: [
         PopupMenuItem(
-          child: Text('Edit Profile'),
+          child: const Text('Edit Profile'),
           onTap: () {
             // Handle Edit Profile action here.
           },
         ),
         PopupMenuItem(
-          child: Text('Edit Salary'),
+          child: const Text('Edit Salary'),
           onTap: () {
             // Handle Edit Salary action here.
           },
         ),
         PopupMenuItem(
-          child: Text('Calendar'),
+          child: const Text('Calendar'),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Material(child: CalendarScreen())),
+                  builder: (context) => const Material(child: CalendarScreen())),
             );
           },
         ),
         PopupMenuItem(
-          child: Text('Logout'),
+          child: const Text('Logout'),
           onTap: () {
             // Handle Logout action here.
           },
@@ -795,7 +805,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   void getPrevHelper() async {
     List<Transaction> _transactions =
-        await HomeScreen().getPrevTransactions(context);
+        await const HomeScreen().getPrevTransactions(context);
     print('${_transactions[0].title} ${_transactions[0].amount}');
     setState(() {
       transactions = _transactions;
@@ -805,6 +815,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   var flag = false;
   @override
   Widget build(BuildContext context) {
+
     final user = Provider.of<UserProvider>(context).user;
     final dataMap = <String, double>{
       "Today's Expenses": double.parse(debit),
@@ -814,184 +825,536 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (transactions.length == 0) {
       getPrevHelper();
     }
+    num fem; // fem local variable is created
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              _scaffoldKey.currentState?.openDrawer();
-            },
+      //here we need to implement
+    body: Container(
+          width: 412,
+          height: 877,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: const Color(0xff2b7a78), width: 1.50, ),
+            color: Colors.white,
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.account_balance_wallet),
-              onPressed: () {},
-            ),
-          ],
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                child: Text('Menu'),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
+          padding: const EdgeInsets.only(bottom: 31, ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              Transform.rotate(
+                angle: -1.57,
+                child: Container(
+                  width: 341,
+                  height: 363,
+                  padding: const EdgeInsets.only(left: 64, top: 98, ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children:[
+                      Transform.rotate(
+                        angle: -1.57,
+                        child: Container(
+                          width: 162.22,
+                          height: 120.50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.white, width: 1, ),
+                            color: const Color(0xff2b7a78),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 2630.30),
+                      Transform.rotate(
+                        angle: -1.57,
+                        child: Container(
+                          width: 220.14,
+                          height: 225.89,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.white, width: 1, ),
+                            color: const Color(0xff3aafa9),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 2630.30),
+                      Container(
+                        width: double.infinity,
+                        height: 341,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Edit Profile'),
-                onTap: () {
-                  // Handle Edit Profile action here.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EditProfileScreen()),
-                  );
-                },
+              const SizedBox(height: 508.10),
+              Container(
+                width: double.infinity,
+                height: 476,
+                color: const Color(0x35a6bbf2),
+                child: Stack(
+                  children:[
+                    Positioned(
+                      left: 78,
+                      top: 124,
+                      child: Container(
+                        width: 340,
+                        height: 62,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: const Color(0x7f000000), width: 1, ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x3f000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                          color: const Color(0xffdef2f1),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 333,
+                      top: 144,
+                      child: SizedBox(
+                        width: 71,
+                        child: Text(
+                          "Rs 158",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xff2b7a78),
+                            fontSize: 18,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 59,
+                      top: 33,
+                      child: Container(
+                        width: 37,
+                        height: 33,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const FlutterLogo(size: 33),
+                      ),
+                    ),
+                    Positioned(
+                      left: 370,
+                      top: 26,
+                      child: Container(
+                        width: 46,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xff3aafa9),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              ListTile(
-                leading: Icon(Icons.attach_money),
-                title: Text('Edit Salary'),
-                onTap: () {
-                  // Handle Edit Salary action here.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EditSalaryScreen()),
-                  );
-                },
+              const SizedBox(height: 508.10),
+              Container(
+                width: 412,
+                height: 19,
+                padding: const EdgeInsets.only(left: 16, right: 206, top: 2, ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children:[
+                    SizedBox(
+                      width: 189.99,
+                      child: Text(
+                        "Previous Transactions",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              ListTile(
-                leading: Icon(Icons.calendar_today),
-                title: Text('Calendar'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CalendarScreen()),
-                  );
-                },
+              const SizedBox(height: 508.10),
+              const SizedBox(
+                width: 290,
+                height: 51,
+                child: Text(
+                  "Today’s expense: Rs 233",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
               ),
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Logout'),
-                onTap: () {
-                  // Handle Logout action here.
-                  AuthService().signOut(context);
-                },
+              const SizedBox(height: 508.10),
+              Container(
+                width: 393.87,
+                height: 74,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: const [
+                      BoxShadow(
+                      color: Color(0x0f000000),
+                      blurRadius: 48,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                  color: const Color(0xffdef2f1),
+                ),
+                child: Stack(
+                  children:[
+                    const Positioned(
+                      left: 333,
+                      top: 18,
+                      child: SizedBox(
+                        width: 53.06,
+                        child: Text(
+                          "Rs 18",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xff2b7a78),
+                            fontSize: 18,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 71,
+                      top: 42,
+                      child: SizedBox(
+                        width: 130,
+                        child: Text(
+                          "28 Sept 2022",
+                          style: TextStyle(
+                            color: Color(0xff7c8894),
+                            fontSize: 12,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 70,
+                      top: 21,
+                      child: SizedBox(
+                        width: 205,
+                        child: Text(
+                          "UPI tranfer through SBI",
+                          style: TextStyle(
+                            color: Color(0xff17252a),
+                            fontSize: 14,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 369,
+                      top: 42,
+                      child: Container(
+                        width: 19,
+                        height: 17,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const FlutterLogo(size: 17),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 508.10),
+              const SizedBox(
+                width: 290,
+                height: 51,
+                child: Text(
+                  "Today’s expense: Rs 233",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 508.10),
+              Container(
+                width: 393.87,
+                height: 74,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x0f000000),
+                      blurRadius: 48,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                  color: const Color(0xffdef2f1),
+                ),
+                child: Stack(
+                  children:[
+                    const Positioned(
+                      left: 333,
+                      top: 18,
+                      child: SizedBox(
+                        width: 53.06,
+                        child: Text(
+                          "Rs 18",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xff2b7a78),
+                            fontSize: 18,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 71,
+                      top: 42,
+                      child: SizedBox(
+                        width: 130,
+                        child: Text(
+                          "28 Sept 2022",
+                          style: TextStyle(
+                            color: Color(0xff7c8894),
+                            fontSize: 12,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 70,
+                      top: 21,
+                      child: SizedBox(
+                        width: 200,
+                        child: Text(
+                          "UPI tranfer through SBI",
+                          style: TextStyle(
+                            color: Color(0xff17252a),
+                            fontSize: 14,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 369,
+                      top: 42,
+                      child: Container(
+                        width: 19,
+                        height: 17,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const FlutterLogo(size: 17),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 508.10),
+              const SizedBox(
+                width: 290,
+                height: 51,
+                child: Text(
+                  "Today’s expense: Rs 233",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 508.10),
+              Container(
+                width: 393.87,
+                height: 74,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x0f000000),
+                      blurRadius: 48,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                  color: const Color(0xffdef2f1),
+                ),
+                child: Stack(
+                  children:[
+                    const Positioned(
+                      left: 333,
+                      top: 18,
+                      child: SizedBox(
+                        width: 53.06,
+                        child: Text(
+                          "Rs 18",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xff2b7a78),
+                            fontSize: 18,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 71,
+                      top: 42,
+                      child: SizedBox(
+                        width: 104,
+                        child: Text(
+                          "28 Sept 2022",
+                          style: TextStyle(
+                            color: Color(0xff7c8894),
+                            fontSize: 12,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 70,
+                      top: 21,
+                      child: SizedBox(
+                        width: 210,
+                        child: Text(
+                          "UPI tranfer through SBI",
+                          style: TextStyle(
+                            color: Color(0xff17252a),
+                            fontSize: 14,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 369,
+                      top: 42,
+                      child: Container(
+                        width: 19,
+                        height: 17,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const FlutterLogo(size: 17),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 508.10),
+              const SizedBox(
+                width: 290,
+                height: 51,
+                child: Text(
+                  "Today’s expense: Rs 233",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 508.10),
+              Container(
+                width: 393.87,
+                height: 74,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x0f000000),
+                      blurRadius: 48,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                  color: const Color(0xffdef2f1),
+                ),
+                child: Stack(
+                  children:[
+                    const Positioned(
+                      left: 333,
+                      top: 18,
+                      child: SizedBox(
+                        width: 53.06,
+                        child: Text(
+                          "Rs 18",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xff2b7a78),
+                            fontSize: 18,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 71,
+                      top: 42,
+                      child: SizedBox(
+                        width: 104,
+                        child: Text(
+                          "28 Sept 2022",
+                          style: TextStyle(
+                            color: Color(0xff7c8894),
+                            fontSize: 12,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Positioned(
+                      left: 70,
+                      top: 21,
+                      child: SizedBox(
+                        width: 187,
+                        child: Text(
+                          "UPI tranfer through SBI",
+                          style: TextStyle(
+                            color: Color(0xff17252a),
+                            fontSize: 14,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 369,
+                      top: 42,
+                      child: Container(
+                        width: 19,
+                        height: 17,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const FlutterLogo(size: 17),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        ),
-        body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      DropdownButton<String>(
-                        value: _expenseOption,
-                        onChanged: (value) {
-                          setState(() {
-                            _expenseOption = value as String;
-                            if (_expenseOption.contains("Today")) {
-                            } else if (_expenseOption.contains("Week")) {
-                              getWeekExpense();
-                            } else {
-                              getMonthExpense();
-                            }
-                          });
-                        },
-                        items: _expensesOptions
-                            .map<DropdownMenuItem<String>>(
-                                (option) => DropdownMenuItem<String>(
-                                      value: option,
-                                      child: Text(option),
-                                    ))
-                            .toList(),
-                      ),
-                      const SizedBox(width: 16.0),
-                      Text(
-                        'Rs $_expensesValue',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16.0),
-                  Expanded(
-                      child: Column(
-                    children: [
-                      PieChart(
-                        dataMap: dataMap,
-                        chartType: ChartType.ring,
-                        baseChartColor: Colors.grey[50]!.withOpacity(0.15),
-                        colorList: colorList,
-                        chartValuesOptions: const ChartValuesOptions(
-                          showChartValuesInPercentage: true,
-                        ),
-                        // totalValue: 600,
-                      )
-                    ],
-                  )),
-                  Text("Today's Debit: $debit"),
-                  Text("Today's Credit: $credit"),
-                  const SizedBox(height: 16.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Previous Transactions'),
-                      IconButton(
-                        icon: const Icon(Icons.calendar_today),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CalendarScreen()));
-                        },
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: transactions.length,
-                      itemBuilder: (context, index) {
-                        final transaction = transactions[index];
-
-                        return ListTile(
-                          title: Text(transaction.title),
-                          subtitle: Text(transaction.date),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (transaction.amount > 0)
-                                Text('Rs ${transaction.amount}')
-                              else
-                                Text('Rs ${-transaction.amount}'),
-                              IconButton(
-                                icon: Icon(Icons.edit),
-                                onPressed: () {
-                                  openTransactionPopup(
-                                      transaction.amount,
-                                      transaction.category,
-                                      transaction.date,
-                                      transaction.time,
-                                      transaction._id);
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ])));
-  }
+        )
+    );
+   }
 }
 
 class Transaction {

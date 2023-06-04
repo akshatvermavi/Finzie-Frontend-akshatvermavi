@@ -240,89 +240,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
     });
   }
 
-  @override
+  @override //I need to change from here
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Calendar"),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 16.0, bottom: 8.0),
-            child: CalendarCarousel(
-              selectedDateTime: _currentDate,
-              onDayPressed: (DateTime date, List events) {
-                setState(() {
-                  _currentDate = date;
-                });
-              },
-              weekendTextStyle: TextStyle(
-                color: Colors.red,
-              ),
-              thisMonthDayBorderColor: Colors.grey,
-              weekFormat: false,
-              height: 420.0,
-              selectedDayButtonColor: Colors.blue,
-              selectedDayTextStyle: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              getCalendar(
-                  "${_currentDate.month}/${_currentDate.day}/${_currentDate.year}");
-            },
-            child: Text("Show Transactions"),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 16.0),
-            child: Text(
-              "Transactions on ${_currentDate.day}/${_currentDate.month}/${_currentDate.year}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: transactions.length,
-              itemBuilder: (context, index) {
-                final transaction = transactions[index];
 
-                return ListTile(
-                  title: Text(transaction.title),
-                  subtitle: Text(transaction.date),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (transaction.amount > 0)
-                        Text('Rs ${transaction.amount}')
-                      else
-                        Text('Rs ${-transaction.amount}'),
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          openTransactionPopup(
-                              transaction.amount,
-                              transaction.category,
-                              transaction.date,
-                              transaction.time,
-                              transaction._id);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
